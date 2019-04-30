@@ -1,0 +1,32 @@
+version: '3.5'
+
+services:
+
+  packy-db:
+    image: packy-mysql-image:1.0.1
+    build:
+      context: images/mysql
+      dockerfile: Dockerfile
+    container_name: packy-mysql-container
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3306:3306"
+    volumes:
+      - packy-db-conf:/etc/mysql/conf.d
+      - packy-db-data:/var/lib/mysql
+      - packy-db-log:/var/log/mysql
+    command: ["mysqld"]
+
+#  packy-project:
+#    depends_on:
+#      - packy-db
+#    image: com.packy/location:1.0.1
+#    container_name: packy-project-container
+#    ports:
+#      - "8080:8080"
+
+volumes:
+  packy-db-conf:
+  packy-db-data:
+  packy-db-log:
